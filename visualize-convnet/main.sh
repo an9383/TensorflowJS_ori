@@ -61,13 +61,14 @@ else
   echo "VGG16 model has already been downloaded and converted."
 fi
 
-yarn
+yarn install
 
 # Clean up old files.
 rm -rf dist/activation dist/filters
 
 echo "Calculating maximally-activating input images for convnet filters..."
-LAYER_NAMES="block1_conv1,block2_conv1,block3_conv2,block4_conv2"
+LAYER_NAMES="block1_conv1"
+#LAYER_NAMES="block1_conv1,block2_conv1,block3_conv2,block4_conv2"
 node main.js \
     "./vgg16_tfjs/model.json" \
     "${LAYER_NAMES}" \
@@ -75,7 +76,8 @@ node main.js \
     --outputDir dist/filters
 
 echo "Calculating convnet activations and class activation map (CAM)..."
-LAYER_NAMES="block1_conv1,block2_conv1,block3_conv2,block4_conv2,block5_conv3"
+LAYER_NAMES="block1_conv1"
+#LAYER_NAMES="block1_conv1,block2_conv1,block3_conv2,block4_conv2,block5_conv3"
 node main.js \
     "./vgg16_tfjs/model.json" \
     "${LAYER_NAMES}" \
@@ -85,3 +87,4 @@ node main.js \
 
 echo "Launching parcel server and opening page in browser..."
 yarn watch
+#npm run watch
